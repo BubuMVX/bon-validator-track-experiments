@@ -1,0 +1,23 @@
+[package]
+name = "ping-pong-forwarder"
+version = "0.1.0"
+authors = ["Battle of Nodes Experimenter"]
+edition = "2021"
+
+[lib]
+path = "ping_pong_forwarder.rs"
+
+[dependencies.multiversx-sc]
+version = "0.53.0"
+features = ["derive"]
+
+[dev-dependencies]
+multiversx-sc-scenario = "0.53.0"
+
+[profile.release]
+codegen-units = 1
+opt-level = "z"
+lto = true
+debug = false
+panic = "abort"
+overflow-checks = false

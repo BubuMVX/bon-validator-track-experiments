@@ -1,0 +1,160 @@
+{
+  "buildInfo": {
+    "rustc": {
+      "version": "1.78.0",
+      "commitHash": "",
+      "commitDate": "",
+      "channel": "Stable",
+      "short": "rustc 1.78.0"
+    },
+    "contractCrate": {
+      "name": "ping-pong-forwarder",
+      "version": "0.1.0"
+    },
+    "framework": {
+      "name": "multiversx-sc",
+      "version": "0.53.0"
+    }
+  },
+  "docs": [
+    "Cross-Shard EGLD Ping-Pong Forwarder Contract",
+    "Forwards EGLD through a ring of contracts across 3 shards.",
+    "Stops after max_hops hops."
+  ],
+  "name": "PingPongForwarder",
+  "constructor": {
+    "docs": [
+      "Initialize with the peer contract address on the next shard."
+    ],
+    "inputs": [
+      {
+        "name": "peer_address",
+        "type": "Address"
+      }
+    ],
+    "outputs": []
+  },
+  "upgradeConstructor": {
+    "inputs": [],
+    "outputs": []
+  },
+  "endpoints": [
+    {
+      "name": "setPeer",
+      "onlyOwner": true,
+      "mutability": "mutable",
+      "inputs": [
+        {
+          "name": "peer_address",
+          "type": "Address"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "startPingPong",
+      "mutability": "mutable",
+      "payableInTokens": ["EGLD"],
+      "inputs": [
+        {
+          "name": "correlation_id",
+          "type": "bytes"
+        },
+        {
+          "name": "max_hops",
+          "type": "u64"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "forward",
+      "mutability": "mutable",
+      "payableInTokens": ["EGLD"],
+      "inputs": [
+        {
+          "name": "correlation_id",
+          "type": "bytes"
+        },
+        {
+          "name": "current_hop",
+          "type": "u64"
+        },
+        {
+          "name": "max_hops",
+          "type": "u64"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "getPeer",
+      "mutability": "readonly",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "Address"
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "identifier": "pingPongHop",
+      "inputs": [
+        {
+          "name": "correlation_id",
+          "type": "bytes",
+          "indexed": true
+        },
+        {
+          "name": "hop_index",
+          "type": "u64",
+          "indexed": true
+        },
+        {
+          "name": "max_hops",
+          "type": "u64"
+        },
+        {
+          "name": "sender",
+          "type": "Address"
+        },
+        {
+          "name": "contract_address",
+          "type": "Address"
+        },
+        {
+          "name": "next_peer",
+          "type": "Address"
+        },
+        {
+          "name": "amount",
+          "type": "BigUint"
+        },
+        {
+          "name": "status",
+          "type": "bytes",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "identifier": "peerUpdated",
+      "inputs": [
+        {
+          "name": "new_peer",
+          "type": "Address",
+          "indexed": true
+        },
+        {
+          "name": "caller",
+          "type": "Address"
+        }
+      ]
+    }
+  ],
+  "esdtAttributes": [],
+  "hasCallback": false,
+  "types": {}
+}
